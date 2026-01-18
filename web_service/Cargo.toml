@@ -2,7 +2,7 @@
 name = "web_service"
 version = "0.1.0"
 edition = "2024"
-default-run = "teacher-service"
+default-run = "teacher-service-v2"
 
 [dependencies]
 actix-rt = "2.11.0"
@@ -18,7 +18,11 @@ sqlx = { version = "0.8.6", features = ["postgres", "runtime-tokio-rustls", "mac
 [[bin]]
 name = "server"
 path = "src/bin/server.rs"
+#
+#[[bin]]
+#name = "teacher-service"
+#path = "src/bin/teacher-service.rs"
 
 [[bin]]
-name = "teacher-service"
-path = "src/bin/teacher-service.rs"
+name = "teacher-service-v2"
+path = "src/bin/teacher-service-v2.rs"
