@@ -9,6 +9,7 @@ pub enum WebServiceError {
     ActixError(String),
     #[allow(dead_code)]
     NotFound(String),
+    InvalidInput(String),
 }
 
 #[derive(Debug, Serialize)]
@@ -31,6 +32,10 @@ impl WebServiceError {
                 println!("Not found error occurred: {:?}", msg);
                 msg.into()
             }
+            WebServiceError::InvalidInput(msg) => {
+                println!("Invalid parameters received: {:?}", msg);
+                msg.into()
+            }
         }
     }
 }
@@ -42,6 +47,7 @@ impl error::ResponseError for WebServiceError {
                 StatusCode::INTERNAL_SERVER_ERROR
             }
             WebServiceError::NotFound(_msg) => StatusCode::NOT_FOUND,
+            WebServiceError::InvalidInput(_msg) => StatusCode::BAD_REQUEST,
         }
     }
 
