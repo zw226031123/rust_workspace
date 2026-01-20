@@ -1,5 +1,5 @@
 use crate::state::AppState;
-use actix_web::{web, HttpResponse};
+use actix_web::{HttpResponse, web};
 
 pub async fn health_check_handler(app_state: web::Data<AppState>) -> HttpResponse {
     println!("incoming for health check");

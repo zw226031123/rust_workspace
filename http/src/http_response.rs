@@ -102,12 +102,12 @@ mod tests {
     #[test]
     fn test_response_struct_creation_200() {
         let response = HttpResponse::new("200", None, Some("text".into()));
-        let response_expected=HttpResponse{
-            version:"HTTP/1.1",
-            status_code:"200",
-            status_text:"OK",
-            headers:{
-                let mut h=HashMap::new();
+        let response_expected = HttpResponse {
+            version: "HTTP/1.1",
+            status_code: "200",
+            status_text: "OK",
+            headers: {
+                let mut h = HashMap::new();
                 h.insert("Content-Type", "application/json");
                 Some(h)
             },
@@ -116,8 +116,5 @@ mod tests {
         assert_eq!(response, response_expected);
     }
     #[test]
-    fn test_response_struct_creation() {
-
-    }
-
+    fn test_response_struct_creation() {}
 }

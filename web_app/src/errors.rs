@@ -1,4 +1,4 @@
-use actix_web::{error, http::StatusCode, HttpResponse, Result};
+use actix_web::{HttpResponse, Result, error, http::StatusCode};
 use serde::Serialize;
 use std::fmt;
 
@@ -43,7 +43,7 @@ impl error::ResponseError for WebAppError {
             WebAppError::ActixError(_msg) | WebAppError::TeraError(_msg) => {
                 StatusCode::INTERNAL_SERVER_ERROR
             }
-            WebAppError::NotFound(_msg) => StatusCode::NOT_FOUND
+            WebAppError::NotFound(_msg) => StatusCode::NOT_FOUND,
         }
     }
     fn error_response(&self) -> HttpResponse {
@@ -53,7 +53,6 @@ impl error::ResponseError for WebAppError {
         HttpResponse::build(self.status_code()).json(resp)
     }
 }
-
 
 impl fmt::Display for WebAppError {
     fn fmt(&self, f: &mut fmt::Formatter) -> Result<(), fmt::Error> {

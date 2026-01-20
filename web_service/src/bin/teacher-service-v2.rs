@@ -1,8 +1,8 @@
-use actix_web::{App, HttpServer, web, http};
+use actix_cors::Cors;
+use actix_web::{App, HttpServer, http, web};
 use sqlx::postgres::PgPoolOptions;
 use std::sync::Mutex;
 use std::{env, io};
-use actix_cors::Cors;
 
 #[path = "../db_access/mod.rs"]
 mod db_access;
@@ -32,7 +32,6 @@ async fn main() -> io::Result<()> {
         db: db_pool,
     });
     let app = move || {
-
         let cors = Cors::default()
             .allowed_origin("http://localhost:8080/")
             .allowed_origin_fn(|origin, _req_head| {
@@ -46,7 +45,6 @@ async fn main() -> io::Result<()> {
             ])
             .allowed_header(http::header::CONTENT_TYPE)
             .max_age(3600);
-
 
         App::new()
             .app_data(shared_data.clone())

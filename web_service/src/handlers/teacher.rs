@@ -1,11 +1,11 @@
+use crate::db_access::teacher::*;
+use crate::error::WebServiceError;
 use crate::models::teacher::{CreateTeacher, UpdateTeacher};
 use crate::state::AppState;
 use actix_web::{HttpResponse, web};
-use crate::db_access::teacher::*;
-use crate::error::WebServiceError;
 
 pub async fn get_all_teachers(
-    app_state: web::Data<AppState>
+    app_state: web::Data<AppState>,
 ) -> Result<HttpResponse, WebServiceError> {
     get_all_teachers_db(&app_state.db)
         .await
@@ -42,8 +42,8 @@ pub async fn update_teacher_details(
         teacher_id,
         UpdateTeacher::from(update_teacher),
     )
-        .await
-        .map(|teacher| HttpResponse::Ok().json(teacher))
+    .await
+    .map(|teacher| HttpResponse::Ok().json(teacher))
 }
 
 pub async fn delete_teacher(
@@ -59,12 +59,12 @@ pub async fn delete_teacher(
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::state::AppState;
     use actix_web::http::StatusCode;
     use dotenv::dotenv;
     use sqlx::postgres::PgPoolOptions;
     use std::env;
     use std::sync::Mutex;
-    use crate::state::AppState;
 
     #[actix_rt::test]
     async fn get_all_teachers_success_test() {

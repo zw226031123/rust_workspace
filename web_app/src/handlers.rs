@@ -1,10 +1,9 @@
 use crate::errors::WebAppError;
 use crate::models::{TeacherRegisterForm, TeacherResponse};
-use actix_web::{web, Error, HttpResponse, Result};
+use actix_web::{Error, HttpResponse, Result, web};
 use serde_json::json;
 
-pub async fn get_all_teachers(tmpl: web::Data<tera::Tera>)
-                              -> Result<HttpResponse, Error> {
+pub async fn get_all_teachers(tmpl: web::Data<tera::Tera>) -> Result<HttpResponse, Error> {
     let awc_client = awc::Client::default();
 
     let res = awc_client
@@ -66,8 +65,7 @@ pub async fn handle_register(
             .unwrap()
             .body()
             .await?;
-        let teacher_response: TeacherResponse =
-            serde_json::from_str(&std::str::from_utf8(&res)?)?;
+        let teacher_response: TeacherResponse = serde_json::from_str(&std::str::from_utf8(&res)?)?;
         s = format!("Congratulations! Your Id is: {}", teacher_response.id);
     }
 
