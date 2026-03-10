@@ -5,11 +5,12 @@ use tokio::sync::broadcast;
 #[tokio::main]
 async fn main() {
     let listener = TcpListener::bind("localhost:8080").await.unwrap();
-    let (tx, _) = broadcast::channel::<String>(10);
+    //::<(String,SocketAddr)>
+    let (tx, _) = broadcast::channel(10);
     loop {
         let tx = tx.clone();
         let mut rx = tx.subscribe();
-        let (mut socket, _address) = listener.accept().await.unwrap();
+        let (mut socket, address) = listener.accept().await.unwrap();
         tokio::spawn(async move {
             let (stream_reader, mut stream_writer) = socket.split();
 
@@ -21,13 +22,15 @@ async fn main() {
                         if result.unwrap() == 0 {
                             break;
                         }
-                        tx.send(message.clone()).unwrap();
+                        tx.send((message.clone(),address)).unwrap();
                         message.clear();
 
                     },
                     result = rx.recv()=>{
-                        let received_message=result.unwrap();
-                        stream_writer.write_all(received_message.as_bytes()).await.unwrap();
+                        let (received_message,sender_address)=result.unwrap();
+                        if sender_address!=address {
+                             stream_writer.write_all(received_message.as_bytes()).await.unwrap();
+                        }
                     }
                 }
             }
