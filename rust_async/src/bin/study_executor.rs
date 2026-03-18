@@ -1,7 +1,7 @@
 use futures::FutureExt;
 use futures::future::BoxFuture;
 use futures::task::{ArcWake, waker_ref};
-use rust_async::studt_future::TimeFuture;
+use rust_async::study_future::TimeFuture;
 use std::sync::mpsc::{Receiver, SyncSender, sync_channel};
 use std::sync::{Arc, Mutex};
 use std::task::Context;

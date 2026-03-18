@@ -1,2 +1,1 @@
-pub mod studt_future;
-
+pub mod study_future;
